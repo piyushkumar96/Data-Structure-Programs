@@ -17,8 +17,7 @@ struct Node {
     }
 } *root;
 
-struct Tree {
-    
+struct Tree { 
     //this is used storing nodes whose left or right child is empty
     queue<Node*> q;
 
@@ -56,7 +55,7 @@ struct Tree {
         if(root == NULL){
             cout<<"Tree is empty"<<"\n";
         }else{
-            queue<Node*> n;
+            queue<struct Node*> n;
             n.push(root);
 
             while(!n.empty()){
@@ -111,6 +110,84 @@ struct Tree {
         }
     }
 
+    //function to delete the deepest node in tree
+    void deleteDeepestNode(struct Node* root, struct Node* dnode){
+        queue<struct Node*> q;
+        q.push(root);
+
+        //doing the level order traversal until last node
+        struct Node* temp;
+        while(!q.empty()){
+            temp = q.front();
+            q.pop();
+
+            if(temp->right){
+                if(temp->right == dnode){
+                    temp->right = NULL;
+                    delete(dnode);
+                    return;
+                }else{
+                    q.push(temp->right);
+                }
+            }
+
+            if(temp->left){
+                if(temp->left == dnode){
+                    temp->left = NULL;
+                    delete(dnode);
+                    return;
+                }else{
+                    q.push(temp->left);
+                }
+            } 
+        }
+    }
+
+    //delete the node 
+    void deleteNode(struct Node* node, int key){
+
+        if(root == NULL){
+            cout<<"Tree is empty"<<"\n";
+        }else if((node->left == NULL) && (node->right == NULL)){     // when single node in tree left for deletion
+            delete(node);
+            root = NULL;
+        }else {
+
+            queue<struct Node*> q;
+            q.push(node);
+
+            struct Node *temp ;
+            struct Node *delnode = NULL;
+            while(!q.empty()){
+
+                temp = q.front();
+                q.pop();
+
+                if(temp->item == key){
+                    delnode = temp;
+                }
+
+                if(temp->left){
+                    q.push(temp->left);
+                }
+
+                if(temp->right){
+                    q.push(temp->right);
+                }
+            }
+
+            cout<<"Levelorder Traversal Before Deletion:- ";
+            levelorder();
+            cout<<"\n";
+            int x = temp->item;
+            deleteDeepestNode(root,temp);
+            delnode->item=x;
+
+            cout<<"Levelorder Traversal After Deletion:- ";
+            levelorder();
+        }
+    }
+
 };
 
 int main(){
@@ -119,7 +196,7 @@ int main(){
    int i, n, item;
    Tree t;
    while(1){
-       cout<<"\nBinary Tree \n 1. insert \n 2. Display(inorder) \n 3. Display(preorder) \n 4. Display(postorder) \n 5. Display(levelorder) \n Press any key to Exit \n";
+       cout<<"\nBinary Tree \n 1. insert \n 2. Display(inorder) \n 3. Display(preorder) \n 4. Display(postorder) \n 5. Display(levelorder) \n 6. DeleteNode \n Press any key to Exit \n";
        cin>>i;
        switch (i)
        {
@@ -128,16 +205,29 @@ int main(){
                     t.insertNode(item);
                     break;
 
-           case 2:  t.inorder(root);
+           case 2:  cout<<"Inorder Traversal :- ";
+                    t.inorder(root);
                     break;
 
-           case 3:  t.preorder(root);
+           case 3:  cout<<"Preorder Traversal :- ";
+                    t.preorder(root);
                     break;
 
-           case 4:  t.postorder(root);
+           case 4:  cout<<"Postorder Traversal :- ";
+                    t.postorder(root);
                     break;
 
-           case 5:  t.levelorder();
+           case 5:  cout<<"levelorder Traversal :- ";
+                    t.levelorder();
+                    break;
+
+           case 6:  if(){
+
+                    }else{
+                        cout<<" Enter element to be deleted ";
+                    cin>>item;
+                    t.deleteNode(root,item);
+                    }
                     break;                                                 
 
            default: exit(1);
