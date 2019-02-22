@@ -1,5 +1,9 @@
 {
     "files.associations": {
+<<<<<<< HEAD
+=======
+        "iostream": "cpp",
+>>>>>>> 72e678cb6fdcd1a9dd4288b979276a79aeb69792
         "array": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
@@ -10,7 +14,10 @@
         "cinttypes": "cpp",
         "clocale": "cpp",
         "cmath": "cpp",
+<<<<<<< HEAD
         "codecvt": "cpp",
+=======
+>>>>>>> 72e678cb6fdcd1a9dd4288b979276a79aeb69792
         "complex": "cpp",
         "condition_variable": "cpp",
         "csetjmp": "cpp",
@@ -22,7 +29,10 @@
         "cstdlib": "cpp",
         "cstring": "cpp",
         "ctime": "cpp",
+<<<<<<< HEAD
         "cuchar": "cpp",
+=======
+>>>>>>> 72e678cb6fdcd1a9dd4288b979276a79aeb69792
         "cwchar": "cpp",
         "cwctype": "cpp",
         "deque": "cpp",
@@ -38,12 +48,16 @@
         "initializer_list": "cpp",
         "iomanip": "cpp",
         "iosfwd": "cpp",
+<<<<<<< HEAD
         "iostream": "cpp",
+=======
+>>>>>>> 72e678cb6fdcd1a9dd4288b979276a79aeb69792
         "istream": "cpp",
         "limits": "cpp",
         "memory": "cpp",
         "mutex": "cpp",
         "new": "cpp",
+<<<<<<< HEAD
         "numeric": "cpp",
         "optional": "cpp",
         "ostream": "cpp",
@@ -54,6 +68,15 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "string_view": "cpp",
+=======
+        "ostream": "cpp",
+        "numeric": "cpp",
+        "ratio": "cpp",
+        "scoped_allocator": "cpp",
+        "sstream": "cpp",
+        "stdexcept": "cpp",
+        "streambuf": "cpp",
+>>>>>>> 72e678cb6fdcd1a9dd4288b979276a79aeb69792
         "system_error": "cpp",
         "thread": "cpp",
         "type_traits": "cpp",

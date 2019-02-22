@@ -1,5 +1,9 @@
+/**
+ *  author:- piyushkumar96
+ *  description:- Using(malloc) Simple Linked List ( Insertion, Deletion, Reverse, Sorting)
+**/
 #include<bits/stdc++.h>
-//using namespace std;
+using namespace std;
 
 struct simplell {
     int item;
@@ -8,12 +12,11 @@ struct simplell {
 
 void insertLast(int item){
   if(HEAD == NULL){
-     //std::cout<<"Linked list is empty "<<"\n";
      struct simplell* newnode = (struct simplell*) malloc(sizeof(struct simplell));
      newnode->item=item;
      newnode->next=NULL;
      HEAD=newnode;
-     std::cout<<"Successfully Inserted "<<"\n";
+     cout<<"Successfully Inserted "<<"\n";
   }else {
         struct simplell* CURR = HEAD;
         while(CURR->next != NULL){
@@ -23,29 +26,28 @@ void insertLast(int item){
         newnode->item=item;
         newnode->next=NULL;
         CURR->next=newnode;
-        std::cout<<"Successfully Inserted "<<"\n";
+        cout<<"Successfully Inserted "<<"\n";
   }
 }
 void insertBegining(int item){
   if(HEAD == NULL){
-     //std::cout<<"Linked list is empty "<<"\n";
      struct simplell* newnode = (struct simplell*) malloc(sizeof(struct simplell));
      newnode->item=item;
      newnode->next=NULL;
      HEAD=newnode;
-     std::cout<<"Successfully Inserted "<<"\n";
+     cout<<"Successfully Inserted "<<"\n";
   }else {
         struct simplell* newnode = (struct simplell*) malloc(sizeof(struct simplell));
         newnode->item=item;
         newnode->next=HEAD;
         HEAD=newnode;
-        std::cout<<"Successfully Inserted "<<"\n";
+        cout<<"Successfully Inserted "<<"\n";
   }
 }
 
 void insertAfter(int ele, int item){
   if(HEAD == NULL){
-     std::cout<<"Linked List is empty \n Use either insertLast or insertBegining to insert first element in LL "<<"\n";
+     cout<<"Linked List is empty \n Use either insertLast or insertBegining to insert first element in LL "<<"\n";
   }else {
         struct simplell* CURR = HEAD;
         while(CURR != NULL){
@@ -54,19 +56,20 @@ void insertAfter(int ele, int item){
                 newnode->item=item;
                 newnode->next=CURR->next;
                 CURR->next=newnode;
-                std::cout<<"Successfully Inserted "<<"\n";
+                cout<<"Successfully Inserted "<<"\n";
+                return;
             }
             CURR=CURR->next;
         }
         if(CURR == NULL){
-            std::cout<<"Element not found"<<"\n";
+            cout<<"Element not found"<<"\n";
         }
   }
 }
 
 void insertBefore(int ele, int item){
   if(HEAD == NULL){
-     std::cout<<"Linked List is empty \n Use either insertLast or insertBegining to insert first element in LL "<<"\n";
+     cout<<"Linked List is empty \n Use either insertLast or insertBegining to insert first element in LL "<<"\n";
   }else {
         struct simplell* CURR = HEAD;
         if(CURR->item == ele){
@@ -82,46 +85,52 @@ void insertBefore(int ele, int item){
                     newnode->item=item;
                     newnode->next=CURR->next;
                     CURR->next=newnode;
-                    std::cout<<"Successfully Inserted "<<"\n";
+                    cout<<"Successfully Inserted "<<"\n";
+                    return;
                 }
                 CURR=CURR->next;
             }
         }
         if(CURR == NULL){
-            std::cout<<"Element not found"<<"\n";
+            cout<<"Element not found"<<"\n";
         }
   }
 }
 
 void deleteLast(){
     if(HEAD == NULL){
-        std::cout<<"Linked list is empty "<<"\n";
+        cout<<"Linked list is empty "<<"\n";
     }else {
             struct simplell* CURR = HEAD;
             if(CURR->next == NULL){
+                delete(CURR);
                 HEAD = NULL;
-                std::cout<<"Successfully Deleted "<<"\n";
+                cout<<"Successfully Deleted "<<"\n";
             }else {
                 while(CURR->next->next != NULL){
                 CURR=CURR->next;
                 }
+                delete(CURR->next);
                 CURR->next=NULL;
-                std::cout<<"Successfully Deleted "<<"\n";
+                cout<<"Successfully Deleted "<<"\n";
             }
             
     }
 }
 void deleteFirst(){
     if(HEAD == NULL){
-        std::cout<<"Linked list is empty "<<"\n";
+        cout<<"Linked list is empty "<<"\n";
     }else {
             
             if(HEAD->next == NULL){
+                delete(HEAD);
                 HEAD = NULL;
-                std::cout<<"Successfully Deleted "<<"\n";
+                cout<<"Successfully Deleted "<<"\n";
             }else {
-                HEAD=HEAD->next;
-                std::cout<<"Successfully Deleted "<<"\n";
+                struct simplell* CURR = HEAD;
+                HEAD = CURR->next;
+                delete(CURR);
+                cout<<"Successfully Deleted "<<"\n";
             }
         
             
@@ -130,31 +139,46 @@ void deleteFirst(){
 
 void deleteEle(int ele){
     if(HEAD == NULL){
-        std::cout<<"Linked list is empty "<<"\n";
+        cout<<"Linked list is empty "<<"\n";
     }else {
             
             struct simplell* CURR = HEAD;
             if(CURR->item == ele){
                 if(CURR->next == NULL){
+                    delete(HEAD);
                     HEAD=NULL;
+                    cout<<"Successfully Deleted "<<"\n";
+                    return;
                 }else {
-                    HEAD=HEAD->next;
+
+                    HEAD = CURR->next;
+                    delete(CURR);
+                    cout<<"Successfully Deleted "<<"\n";
+                    return;
                 }
             }else {
 
                 while(CURR != NULL){
                     if(CURR->next->item == ele){
                         if(CURR->next->next == NULL){
+                            struct simplell* temp = CURR->next;
                             CURR->next=NULL;
+                            delete(temp);
+                            cout<<"Successfully Deleted "<<"\n";
+                            return;
                         }else {
+                            struct simplell* temp = CURR->next;
                             CURR->next=CURR->next->next;
+                            delete(temp);
+                            cout<<"Successfully Deleted "<<"\n";
+                            return;
                         }
                     }
                     CURR=CURR->next;
                 }
             }
             if(CURR == NULL){
-                std::cout<<"Element not found"<<"\n";
+                cout<<"Element not found"<<"\n";
             }
         
             
@@ -163,7 +187,7 @@ void deleteEle(int ele){
 
 void reverseLL(){
     if(HEAD == NULL){
-        std::cout<<"Linked list is empty "<<"\n";
+        cout<<"Linked list is empty "<<"\n";
     }else {
         struct simplell* CURR = HEAD, *PREV= NULL, *NEXT=NULL;
         while(CURR != NULL){
@@ -173,21 +197,21 @@ void reverseLL(){
             CURR=NEXT;            
         }  
         HEAD=PREV;   
-        std::cout<<" Linked List is reversed "<<"\n";              
+        cout<<" Linked List is reversed "<<"\n";              
     }
 }
 
 void printLL(){
     struct simplell* CURR = HEAD;
     if(CURR == NULL){
-        std::cout<<" Linked List is empty. Please insert element first"<<"\n";
+        cout<<" Linked List is empty. Please insert element first"<<"\n";
     }else {
-        std::cout<<"Linked List:- ";
+        cout<<"Linked List:- ";
         while(CURR != NULL){
-            std::cout<<CURR->item<<" ";
+            cout<<CURR->item<<" ";
             CURR=CURR->next;
         }
-        std::cout<<"\n";
+        cout<<"\n";
     }
 }
 
@@ -247,43 +271,43 @@ void frontbackSplit(struct simplell* source, struct simplell** frontref, struct 
 
     void sortLL(){
         mergeSort(&HEAD); 
-        std::cout<<" Sorted Linked List :- ";
+        cout<<" Sorted Linked List :- ";
         printLL();
     }
 
 int main(){
    int i, item, ele;
    while(1){
-       std::cout<<"\nSimple Linked List \n 1. insertLast \n 2. insertBegining \n 3. insertAfter \n 4. insertBefore \n 5. deleteLast \n 6. deleteFirst \n 7. deleteEle \n 8. reverseLinked List \n 9. Sort Linked List \n 10. Display \n Press any key to Exit \n";
-       std::cin>>i;
+       cout<<"\nSimple Linked List \n 1. insertLast \n 2. insertBegining \n 3. insertAfter \n 4. insertBefore \n 5. deleteLast \n 6. deleteFirst \n 7. deleteEle \n 8. reverseLinked List \n 9. Sort Linked List \n 10. Display \n Press any key to Exit \n";
+       cin>>i;
        switch (i)
        {
-           case 1:  std::cout<<" Enter element to be insert at last ";
-                    std::cin>>item;
+           case 1:  cout<<" Enter element to be insert at last ";
+                    cin>>item;
                     insertLast(item);
                     break;
-           case 2:  std::cout<<" Enter element to be insert at begining ";
-                    std::cin>>item;
+           case 2:  cout<<" Enter element to be insert at begining ";
+                    cin>>item;
                     insertBegining(item);
                     break;
-           case 3:  std::cout<<" Enter element to be insert ";
-                    std::cin>>item;
-                    std::cout<<" Enter element After which You want to insert new element ";
-                    std::cin>>ele;
+           case 3:  cout<<" Enter element to be insert ";
+                    cin>>item;
+                    cout<<" Enter element After which You want to insert new element ";
+                    cin>>ele;
                     insertAfter(ele, item);
                     break;
-           case 4:  std::cout<<" Enter element to be insert ";
-                    std::cin>>item;
-                    std::cout<<" Enter element After which You want to insert new element ";
-                    std::cin>>ele;
+           case 4:  cout<<" Enter element to be insert ";
+                    cin>>item;
+                    cout<<" Enter element After which You want to insert new element ";
+                    cin>>ele;
                     insertBefore(ele, item);
                     break;
            case 5:  deleteLast();
                     break;
            case 6:  deleteFirst();
                     break;
-           case 7:  std::cout<<" Enter element to be deleted ";
-                    std::cin>>ele;
+           case 7:  cout<<" Enter element to be deleted ";
+                    cin>>ele;
                     deleteEle(ele);
                     break;
            case 8:  reverseLL();

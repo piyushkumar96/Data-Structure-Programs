@@ -1,6 +1,6 @@
 /**
  *  author:- piyushkumar96
- *  description:- Nth Element from Last (Two Methods Used)
+ *  description:- Searching the Element (Recursive and Iterative)
 **/
 
 #include<bits/stdc++.h>
