@@ -64,14 +64,38 @@ struct LinkedList {
 
         if(rest == NULL)
             return;
-        
+
+        // to reset the HEAD to Last node
+        if(rest->next == NULL){
+            HEAD = rest;
+        }
+
+        /* reverse the rest list and put the first element at the end */
         reverseLLM2(&rest);
         first->next->next = first;
         first->next = NULL;
-        
-        *head = rest;
+
+        //Use above code or below code to set HEAD
+        //*head = rest;
     }
     
+    // A simple and tail recursive function to reverse  a linked list.  prev is passed as NULL initially.
+
+    void reverseLLM3(struct Node* curr, struct Node *prev, struct Node **head){
+        
+        /* If last node mark it head*/
+        if(!curr->next){
+            *head = curr;
+            curr->next = prev;
+            return;
+        }
+
+        struct Node *next = curr->next;
+        curr->next = prev ;
+
+        reverseLLM3(next, curr, head);    
+    }
+
     void printLL(){
         Node* CURR = HEAD;
         if(CURR == NULL){
@@ -92,7 +116,7 @@ int main(){
    int i, item, ele;
    LinkedList ll;
    while(1){
-       cout<<"\nSimple Linked List \n 1. insert \n 2. reverseLL (iterative method) \n 3. reverseLinkedList (recursive method)  \n 4. Display \n Press any key to Exit \n";
+       cout<<"\nSimple Linked List \n 1. insert \n 2. reverseLinkedList (iterative method) \n 3. reverseLinkedList (recursive method) \n 4. reverseLinkedList (tail recursive method)  \n 5. Display \n Press any key to Exit \n";
        cin>>i;
        switch (i)
        {
@@ -108,7 +132,11 @@ int main(){
                     cout<<" Reversed LL :-";
                     ll.printLL();
                     break;
-           case 4:  ll.printLL();
+           case 4:  ll.reverseLLM3(HEAD, NULL, &HEAD);
+                    cout<<" Reversed LL :-";
+                    ll.printLL();
+                    break;
+           case 5:  ll.printLL();
                     break;       
            default: exit(1);
                     break;
