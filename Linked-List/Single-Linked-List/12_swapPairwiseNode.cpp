@@ -42,16 +42,6 @@ struct LinkedList {
         (*b)->item = temp;
     }
 
-    void swapLink(struct Node *a, struct Node *b){
-        cout<<"a "<<a->item<<" b "<<b->item<<"\n";
-        struct Node *temp = a;
-        (a)->next = (b)->next;
-        (b)->next = a;
-        cout<<"a "<<a->item<<" b "<<b->item<<"\n";
-        //return a;
-    }
-
-
     // recursive method by swaping datas of Nodes
     void recursivePairwiseSwap(struct Node *head_ref){
 
@@ -72,11 +62,17 @@ struct LinkedList {
             cout<<"Linked List is empty "<<"\n";
         }else{
             if((head_ref == NULL) || (head_ref->next == NULL) ){
+                
                 return;                   
             }
             HEAD = HEAD->next;
-            swapLink(head_ref, (head_ref->next));
-            recursivePairwiseSwap(head_ref->next);
+            //cout<<"HEAD "<<HEAD->item<<"\n";
+            struct Node* temp = head_ref->next->next;
+            head_ref->next->next = head_ref;
+            head_ref->next = temp;
+
+            recursivePairwiseSwap(temp);
+            
         }
     }
     
@@ -99,14 +95,20 @@ struct LinkedList {
             cout<<"Linked List is empty "<<"\n";
         }else{
             struct Node *temp = HEAD;
-            struct Node *temp1 = NULL;
-            HEAD = HEAD->next;
             
+            HEAD = HEAD->next;
             while(temp != NULL && temp->next != NULL){
-                temp1 = temp->next->next;
-                cout<<"temp1 "<<temp1->item;
-                swapLink(temp , (temp->next));
-                temp = temp1;          
+                struct Node* temp1 = temp->next->next;
+
+                temp->next->next = temp;
+                if(temp1->next == NULL){
+                    temp->next = temp1;
+                    break;
+                }  
+
+                temp->next = temp1->next;
+                temp = temp1;        
+                
             }
         }
     }
