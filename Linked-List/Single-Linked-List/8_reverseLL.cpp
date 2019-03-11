@@ -5,6 +5,7 @@
 
 #include<bits/stdc++.h>
 using namespace std;
+typedef uintptr_t ut;
 
 struct Node{
     int item;
@@ -36,7 +37,9 @@ struct LinkedList {
         }
     }
     
-    void reverseLLM1(){
+    //iterative method with three pointers
+
+    void reverseLLIM1(){
         if(HEAD == NULL){
             cout<<"Linked list is empty "<<"\n";
         }else {
@@ -52,7 +55,27 @@ struct LinkedList {
         }
     }
 
-    void reverseLLM2(struct Node** head){
+    //iterative method with 2 pointers
+    void reverseLLIM2(){
+        if(HEAD == NULL){
+            cout<<"Linked List is empty"<<"\n";
+        }else{
+            Node* CURR = HEAD;
+            Node* PREV = NULL;
+            while(CURR != NULL){
+                // This example of list will clear it more 1->2->3->4 
+                // initially prev = 1, current = 2 
+                // Final expression will be current = 1^2^3^2^1, 
+                // as we know that bitwise XOR of two same 
+                // numbers will always be 0 i.e; 1^1 = 2^2 = 0 
+                // After the evaluation of expression current = 3
+                CURR= (struct Node*)((ut)PREV ^ (ut)CURR ^ (ut)(CURR->next) ^ (ut)(CURR->next=PREV) ^ (ut)(PREV=CURR) );
+            }
+            HEAD = PREV;
+        }
+    }
+
+    void reverseLLRM1(struct Node** head){
         struct Node* first;
         struct Node* rest;
 
@@ -71,7 +94,7 @@ struct LinkedList {
         }
 
         /* reverse the rest list and put the first element at the end */
-        reverseLLM2(&rest);
+        reverseLLRM1(&rest);
         first->next->next = first;
         first->next = NULL;
 
@@ -81,7 +104,7 @@ struct LinkedList {
     
     // A simple and tail recursive function to reverse  a linked list.  prev is passed as NULL initially.
 
-    void reverseLLM3(struct Node* curr, struct Node *prev, struct Node **head){
+    void reverseLLRM2(struct Node* curr, struct Node *prev, struct Node **head){
         
         /* If last node mark it head*/
         if(!curr->next){
@@ -93,7 +116,7 @@ struct LinkedList {
         struct Node *next = curr->next;
         curr->next = prev ;
 
-        reverseLLM3(next, curr, head);    
+        reverseLLRM2(next, curr, head);    
     }
 
     void printLL(){
@@ -116,7 +139,7 @@ int main(){
    int i, item, ele;
    LinkedList ll;
    while(1){
-       cout<<"\nSimple Linked List \n 1. insert \n 2. reverseLinkedList (iterative method) \n 3. reverseLinkedList (recursive method) \n 4. reverseLinkedList (tail recursive method)  \n 5. Display \n Press any key to Exit \n";
+       cout<<"\nSimple Linked List \n 1. insert \n 2. reverseLinkedList (iterative method with 3 ptrs) \n 3. reverseLinkedList (iterative method with 2 ptrs) \n 4. reverseLinkedList (recursive method) \n 5. reverseLinkedList (tail recursive method)  \n 6. Display \n Press any key to Exit \n";
        cin>>i;
        switch (i)
        {
@@ -124,19 +147,23 @@ int main(){
                     cin>>item;
                     ll.insert(item);
                     break;
-           case 2:  ll.reverseLLM1();
+           case 2:  ll.reverseLLIM1();
                     cout<<" Reversed LL :-";
                     ll.printLL();
                     break;
-           case 3:  ll.reverseLLM2(&HEAD);
+           case 3:  ll.reverseLLIM2();
                     cout<<" Reversed LL :-";
                     ll.printLL();
                     break;
-           case 4:  ll.reverseLLM3(HEAD, NULL, &HEAD);
+           case 4:  ll.reverseLLRM1(&HEAD);
                     cout<<" Reversed LL :-";
                     ll.printLL();
                     break;
-           case 5:  ll.printLL();
+           case 5:  ll.reverseLLRM2(HEAD, NULL, &HEAD);
+                    cout<<" Reversed LL :-";
+                    ll.printLL();
+                    break;
+           case 6:  ll.printLL();
                     break;       
            default: exit(1);
                     break;
