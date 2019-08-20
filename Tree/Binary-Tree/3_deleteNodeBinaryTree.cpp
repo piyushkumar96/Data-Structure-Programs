@@ -1,6 +1,6 @@
 /**
  *  author:- piyushkumar96
- *  description:- Binary Tree Creation
+ *  description:- Binary Tree Deletion
 **/
 
 #include<bits/stdc++.h>

@@ -1,6 +1,6 @@
 /**
  *  author:- piyushkumar96
- *  description:- Binary Tree Creation
+ *  description:- Binary Tree Traversal BFS(level order) and DFS (preorder, inorder, postorder)
 **/
 
 #include<bits/stdc++.h>
