@@ -144,13 +144,14 @@ struct Tree {
     }
 
     //delete the node 
-    void deleteNode(struct Node* node, int key){
+   struct Node * deleteNode(struct Node* node, int key){
 
         if(root == NULL){
             cout<<"Tree is empty"<<"\n";
+            return NULL;
         }else if((node->left == NULL) && (node->right == NULL)){     // when single node in tree left for deletion
             delete(node);
-            root = NULL;
+            return NULL;
         }else {
 
             queue<struct Node*> q;
@@ -185,6 +186,8 @@ struct Tree {
 
             cout<<"Levelorder Traversal After Deletion:- ";
             levelorder();
+
+            return root;
         }
     }
 
@@ -221,13 +224,10 @@ int main(){
                     t.levelorder();
                     break;
 
-           case 6:  if(){
-
-                    }else{
-                        cout<<" Enter element to be deleted ";
+           case 6:  cout<<" Enter element to be deleted ";
                     cin>>item;
-                    t.deleteNode(root,item);
-                    }
+                     root = t.deleteNode(root,item);
+                    
                     break;                                                 
 
            default: exit(1);

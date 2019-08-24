@@ -1,6 +1,6 @@
 /**
  *  author:- piyushkumar96
- *  description:- Binary Tree Travesal Recursive Method (inorder, preorder, postorder)
+ *  description:- Binary Tree Travesal Iterative Method (inorder, preorder, postorder)
 **/
 
 #include<bits/stdc++.h>
@@ -38,10 +38,25 @@ void BinaryTree::inorderTraversal(struct Node *root){
     if(root == NULL){
         return;
     }
-     
-     inorderTraversal(root->left);
-     cout<<root->data<<" ";
-     inorderTraversal(root->right);
+
+    stack<Node *> st;
+    Node *nd = root;
+
+    while(nd != NULL || !st.empty()){
+        
+        // go to left end and simultaneously save in stack
+        while(nd != NULL){
+            st.push(nd);
+            nd = nd->left;
+        }
+        nd = st.top();
+        st.pop();
+        cout<<nd->data<<" ";
+
+        // traverse the right side of tree
+        nd = nd->right;
+    }
+      
 }
 
 // preorder traversal recursive function
@@ -49,9 +64,23 @@ void BinaryTree::preorderTraversal(struct Node *root){
     if(root == NULL){
         return;
     }
-    cout<<root->data<<" ";
-    preorderTraversal(root->left);
-    preorderTraversal(root->right);
+    
+    stack<Node *> st;
+    st.push(root);
+
+    Node *nd = st.top();
+
+    while(!st.empty()){
+        struct Node *tmp = st.top();
+        st.pop();
+
+        cout<<tmp->data<<" ";
+        if(tmp->right)
+            st.push(tmp->right);
+        
+        if(tmp->left)
+            st.push(tmp->left);
+    }
 }
 
 // postorder traversal recursive function
@@ -59,9 +88,33 @@ void BinaryTree::postorderTraversal(struct Node *root){
     if(root == NULL){
         return;
     }
-    postorderTraversal(root->left);
-    postorderTraversal(root->right);
-    cout<<root->data<<" ";
+    
+    stack<Node *> st;
+
+    struct Node *tmp = root;
+    do{
+        
+        while(tmp != NULL){
+            if(tmp->right){
+                st.push(tmp->right);
+            }
+            st.push(tmp);
+            tmp = tmp->left;
+        }
+        tmp = st.top();
+        st.pop();
+
+        // checking that currents right is equal to top of stack
+        if(tmp->right && tmp->right == st.top()){
+            st.pop();
+            st.push(tmp);
+            tmp = tmp->right;
+        }else{
+            cout<<tmp->data<<" ";
+            tmp = NULL;
+        }
+
+    } while( !st.empty());
 
 }
 
@@ -173,7 +226,6 @@ struct Node* BinaryTree::deleteNode(struct Node *root, int item){
     }
     return root;
 }
-
 
 
 int main(){
