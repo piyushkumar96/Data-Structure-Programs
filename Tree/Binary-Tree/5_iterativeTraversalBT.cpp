@@ -1,6 +1,6 @@
 /**
  *  author:- piyushkumar96
- *  description:- Binary Tree Travesal Iterative Method (inorder, preorder, postorder)
+ *  description:- Iterative Method Binary Tree Travesal (inorder, preorder, postorder)
 **/
 
 #include<bits/stdc++.h>
