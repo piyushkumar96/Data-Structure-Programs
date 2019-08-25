@@ -1,6 +1,6 @@
 /**
  *  author:- piyushkumar96
- *  description:- Nth node of inorder traversal of Binary Tree
+ *  description:- Height of Binary Tree
 **/
 
 #include<bits/stdc++.h>
