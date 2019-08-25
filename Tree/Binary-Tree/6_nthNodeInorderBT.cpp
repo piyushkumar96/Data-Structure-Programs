@@ -1,6 +1,6 @@
 /**
  *  author:- piyushkumar96
- *  description:- Iterative Method Binary Tree Travesal (inorder, preorder, postorder)
+ *  description:- Nth node of inorder traversal of Binary Tree
 **/
 
 #include<bits/stdc++.h>
@@ -27,11 +27,62 @@ class BinaryTree {
         Node* deleteNode(struct Node *root, int item);
         void delDeepestNode(struct Node *root, struct Node *node);
         void inorderTraversal(struct Node *node);
-        void preorderTraversal(struct Node *node);
-        void postorderTraversal(struct Node *node);
-        void levelOrderTraversal(struct Node *node);
+        void nthNodeInorderItr(struct Node *node,int n);
+        void nthNodeInorderRec(struct Node *root,int n);
 
 };
+
+
+// nth node of inorder iterative traversal 
+void BinaryTree::nthNodeInorderItr(struct Node *root, int n){
+    if((root == NULL) || (n <= 0)){
+        return;
+    }
+    
+    int count=0;
+    stack<Node *> st;
+    Node *nd = root;
+    bool flag = false;
+    while(nd != NULL || !st.empty()){
+        
+        // go to left end and simultaneously save in stack
+        while(nd != NULL){
+            st.push(nd);
+            nd = nd->left;
+        }
+        nd = st.top();
+        st.pop();
+        count++;
+        if(count == n){
+            flag=true;
+            cout<<nd->data<<" ";
+            break;
+        }
+
+        // traverse the right side of tree
+        nd = nd->right;
+    }
+      
+    if(flag == false){
+        cout<<"Enter the number is not possible \n";
+    }
+}
+
+// inorder traversal recursive function
+void BinaryTree::nthNodeInorderRec(struct Node *root,int n){
+    static int count=0;
+    if((root == NULL) || (n<=0)){
+        return;
+    }
+        if(count <= n){
+            nthNodeInorderRec(root->left,n);
+            count++;
+            if(count == n){
+                cout<<root->data<<" ";
+            }
+            nthNodeInorderRec(root->right,n);
+        }
+}
 
 // inorder traversal iterative function
 void BinaryTree::inorderTraversal(struct Node *root){
@@ -57,84 +108,6 @@ void BinaryTree::inorderTraversal(struct Node *root){
         nd = nd->right;
     }
       
-}
-
-// preorder traversal recursive function
-void BinaryTree::preorderTraversal(struct Node *root){
-    if(root == NULL){
-        return;
-    }
-    
-    stack<Node *> st;
-    st.push(root);
-
-    Node *nd = st.top();
-
-    while(!st.empty()){
-        struct Node *tmp = st.top();
-        st.pop();
-
-        cout<<tmp->data<<" ";
-        if(tmp->right)
-            st.push(tmp->right);
-        
-        if(tmp->left)
-            st.push(tmp->left);
-    }
-}
-
-// postorder traversal iterative function
-void BinaryTree::postorderTraversal(struct Node *root){
-    if(root == NULL){
-        return;
-    }
-    
-    stack<Node *> st;
-
-    struct Node *tmp = root;
-    do{
-        
-        while(tmp != NULL){
-            if(tmp->right){
-                st.push(tmp->right);
-            }
-            st.push(tmp);
-            tmp = tmp->left;
-        }
-        tmp = st.top();
-        st.pop();
-
-        // checking that currents right is equal to top of stack
-        if(tmp->right && tmp->right == st.top()){
-            st.pop();
-            st.push(tmp);
-            tmp = tmp->right;
-        }else{
-            cout<<tmp->data<<" ";
-            tmp = NULL;
-        }
-
-    } while( !st.empty());
-
-}
-
-// level order traversal iterative function
-void BinaryTree::levelOrderTraversal(struct Node *root){
-   
-   queue<Node *> qu;
-   qu.push(root);
-   while(!qu.empty()){
-       struct Node *tmp = qu.front();
-       qu.pop();
-       cout<<tmp->data<<" ";
-       if(tmp->left){
-           qu.push(tmp->left);
-       }
-       if(tmp->right){
-           qu.push(tmp->right);
-       }
-   }
-     
 }
 
 // insert function
@@ -234,7 +207,7 @@ int main(){
    int i, n, item;
    BinaryTree t;
    while(1){
-       cout<<"\nBinary Tree \n 1. insert \n 2. Display(inorder) \n 3. Display(preorder) \n 4. Display(postorder) \n 5. Display(levelorder) \n 6. DeleteNode \n Press any key to Exit \n";
+       cout<<"\nBinary Tree \n 1. insert \n 2. Display(inorder) \n 3. Nth node of inorder itr traversal \n 4. Nth node of inorder rec traversal \n 5. DeleteNode \n Press any key to Exit \n";
        cin>>i;
        switch (i)
        {
@@ -247,19 +220,19 @@ int main(){
                     t.inorderTraversal(root);
                     break;
 
-           case 3:  cout<<"Preorder Traversal :- ";
-                    t.preorderTraversal(root);
+           case 3:  cout<<" Enter value of n ";
+                    cin>>item;
+                    cout<<"Nth node of inorder iterative Traversal :- ";
+                    t.nthNodeInorderItr(root,item);
                     break;
 
-           case 4:  cout<<"Postorder Traversal :- ";
-                    t.postorderTraversal(root);
+           case 4:  cout<<" Enter value of n ";
+                    cin>>item;
+                    cout<<"Nth node of inorder recursive Traversal :- ";
+                    t.nthNodeInorderRec(root,item);
                     break;
 
-           case 5:  cout<<"levelorder Traversal :- ";
-                    t.levelOrderTraversal(root);
-                    break;
-
-           case 6:  cout<<" Enter element to be deleted ";
+           case 5:  cout<<" Enter element to be deleted ";
                     cin>>item;
                     root = t.deleteNode(root,item);
                     break;                                                 

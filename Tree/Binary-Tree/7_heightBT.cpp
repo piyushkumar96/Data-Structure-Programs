@@ -1,6 +1,6 @@
 /**
  *  author:- piyushkumar96
- *  description:- Iterative Method Binary Tree Travesal (inorder, preorder, postorder)
+ *  description:- Nth node of inorder traversal of Binary Tree
 **/
 
 #include<bits/stdc++.h>
@@ -26,100 +26,31 @@ class BinaryTree {
         void insertNode(int item);
         Node* deleteNode(struct Node *root, int item);
         void delDeepestNode(struct Node *root, struct Node *node);
-        void inorderTraversal(struct Node *node);
-        void preorderTraversal(struct Node *node);
-        void postorderTraversal(struct Node *node);
-        void levelOrderTraversal(struct Node *node);
+        void levelorderTraversal(struct Node *root);
+        int height(struct Node *root);
+        
 
 };
 
-// inorder traversal iterative function
-void BinaryTree::inorderTraversal(struct Node *root){
+
+// height of BT
+int BinaryTree::height(struct Node *root){
     if(root == NULL){
-        return;
+        return 0;
+    }else{
+
+        int lh = height(root->left);
+        int rh = height(root->right);
+
+        if (lh>rh)
+            return (lh+1); 
+        else 
+            return (rh+1);
     }
-
-    stack<Node *> st;
-    Node *nd = root;
-
-    while(nd != NULL || !st.empty()){
-        
-        // go to left end and simultaneously save in stack
-        while(nd != NULL){
-            st.push(nd);
-            nd = nd->left;
-        }
-        nd = st.top();
-        st.pop();
-        cout<<nd->data<<" ";
-
-        // traverse the right side of tree
-        nd = nd->right;
-    }
-      
-}
-
-// preorder traversal recursive function
-void BinaryTree::preorderTraversal(struct Node *root){
-    if(root == NULL){
-        return;
-    }
-    
-    stack<Node *> st;
-    st.push(root);
-
-    Node *nd = st.top();
-
-    while(!st.empty()){
-        struct Node *tmp = st.top();
-        st.pop();
-
-        cout<<tmp->data<<" ";
-        if(tmp->right)
-            st.push(tmp->right);
-        
-        if(tmp->left)
-            st.push(tmp->left);
-    }
-}
-
-// postorder traversal iterative function
-void BinaryTree::postorderTraversal(struct Node *root){
-    if(root == NULL){
-        return;
-    }
-    
-    stack<Node *> st;
-
-    struct Node *tmp = root;
-    do{
-        
-        while(tmp != NULL){
-            if(tmp->right){
-                st.push(tmp->right);
-            }
-            st.push(tmp);
-            tmp = tmp->left;
-        }
-        tmp = st.top();
-        st.pop();
-
-        // checking that currents right is equal to top of stack
-        if(tmp->right && tmp->right == st.top()){
-            st.pop();
-            st.push(tmp);
-            tmp = tmp->right;
-        }else{
-            cout<<tmp->data<<" ";
-            tmp = NULL;
-        }
-
-    } while( !st.empty());
-
 }
 
 // level order traversal iterative function
-void BinaryTree::levelOrderTraversal(struct Node *root){
+void BinaryTree::levelorderTraversal(struct Node *root){
    
    queue<Node *> qu;
    qu.push(root);
@@ -234,7 +165,7 @@ int main(){
    int i, n, item;
    BinaryTree t;
    while(1){
-       cout<<"\nBinary Tree \n 1. insert \n 2. Display(inorder) \n 3. Display(preorder) \n 4. Display(postorder) \n 5. Display(levelorder) \n 6. DeleteNode \n Press any key to Exit \n";
+       cout<<"\nBinary Tree \n 1. insert \n 2. Display(levelorder) \n 3. height of tree \n 4. DeleteNode \n Press any key to Exit \n";
        cin>>i;
        switch (i)
        {
@@ -243,23 +174,16 @@ int main(){
                     t.insertNode(item);
                     break;
 
-           case 2:  cout<<"Inorder Traversal :- ";
-                    t.inorderTraversal(root);
+           case 2:  cout<<"Levelorder Traversal :- ";
+                    t.levelorderTraversal(root);
                     break;
 
-           case 3:  cout<<"Preorder Traversal :- ";
-                    t.preorderTraversal(root);
+           case 3:  
+                    cout<<"The height of Tree :- ";
+                    cout<<t.height(root)<<"\n";
                     break;
 
-           case 4:  cout<<"Postorder Traversal :- ";
-                    t.postorderTraversal(root);
-                    break;
-
-           case 5:  cout<<"levelorder Traversal :- ";
-                    t.levelOrderTraversal(root);
-                    break;
-
-           case 6:  cout<<" Enter element to be deleted ";
+           case 4:  cout<<" Enter element to be deleted ";
                     cin>>item;
                     root = t.deleteNode(root,item);
                     break;                                                 

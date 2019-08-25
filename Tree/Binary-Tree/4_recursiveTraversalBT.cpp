@@ -65,21 +65,40 @@ void BinaryTree::postorderTraversal(struct Node *root){
 
 }
 
+// level order Trversal helper function
+void printLevelOrderTraversal(struct Node *root, int level){
+    if(root == NULL){
+        return ;
+    }else if (level == 1){
+        cout<<root->data<<" ";
+    }else if (level > 1) {
+        printLevelOrderTraversal(root->left,level - 1);
+        printLevelOrderTraversal(root->right, level - 1 );
+    }
+}
+
+// height of tree
+int height(struct Node *root){
+    if(root == NULL){
+        return 0;
+    }else{
+        int lh = height(root->left);
+        int rh = height(root->right);
+
+        if(lh > rh){
+            return lh + 1;
+        }else{
+            return rh + 1;
+        }
+    }
+}
+
 // level order traversal recursive function
 void BinaryTree::levelOrderTraversal(struct Node *root){
-   
-   queue<Node *> qu;
-   qu.push(root);
-   while(!qu.empty()){
-       struct Node *tmp = qu.front();
-       qu.pop();
-       cout<<tmp->data<<" ";
-       if(tmp->left){
-           qu.push(tmp->left);
-       }
-       if(tmp->right){
-           qu.push(tmp->right);
-       }
+   int h = height(root);
+
+   for(int i=1; i<=h; i++){
+       printLevelOrderTraversal(root,i);
    }
      
 }
