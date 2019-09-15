@@ -1,6 +1,7 @@
 /**
  *  author:- piyushkumar96
  *  description:- spiral levelorder of Binary Tree using 1 Stack and 1 Queue
+ *  Time Complexity:- O(n) time and O(n) Space
 **/
 
 #include<bits/stdc++.h>
@@ -84,6 +85,10 @@ void BinaryTree::spiralPrint(struct Node *root){
 // level order traversal iterative function
 void BinaryTree::levelorderTraversal(struct Node *root){
    
+   if(root == NULL){
+       cout<<"Tree is Empty \n";
+       return ;
+   }
    queue<Node *> qu;
    qu.push(root);
    while(!qu.empty()){
