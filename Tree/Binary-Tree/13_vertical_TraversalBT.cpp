@@ -1,6 +1,7 @@
 /**
  *  author:- piyushkumar96
  *  description:- vertical Traversal of Binary Tree
+ *  Time Complexity:- O(nLogn) time (map in STL is typically implemented using a Self-Balancing Binary Search Tree where all operations take O(Logn) time).
 **/
 
 #include<bits/stdc++.h>
@@ -72,6 +73,10 @@ void BinaryTree::verticalTraversal(struct Node *root){
 // level order traversal iterative function
 void BinaryTree::levelorderTraversal(struct Node *root){
    
+   if(root == NULL){
+       cout<<"Tree is Empty \n";
+       return ;
+   }
    queue<Node *> qu;
    qu.push(root);
    while(!qu.empty()){
