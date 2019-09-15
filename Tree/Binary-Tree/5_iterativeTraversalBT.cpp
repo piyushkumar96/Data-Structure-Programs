@@ -36,8 +36,9 @@ class BinaryTree {
 // inorder traversal iterative function
 void BinaryTree::inorderTraversal(struct Node *root){
     if(root == NULL){
-        return;
-    }
+       cout<<"Tree is Empty \n";
+       return ;
+   }
 
     stack<Node *> st;
     Node *nd = root;
@@ -62,8 +63,9 @@ void BinaryTree::inorderTraversal(struct Node *root){
 // preorder traversal recursive function
 void BinaryTree::preorderTraversal(struct Node *root){
     if(root == NULL){
-        return;
-    }
+       cout<<"Tree is Empty \n";
+       return ;
+   }
     
     stack<Node *> st;
     st.push(root);
@@ -86,8 +88,9 @@ void BinaryTree::preorderTraversal(struct Node *root){
 // postorder traversal iterative function
 void BinaryTree::postorderTraversal(struct Node *root){
     if(root == NULL){
-        return;
-    }
+       cout<<"Tree is Empty \n";
+       return ;
+   }
     
     stack<Node *> st;
 
@@ -121,6 +124,10 @@ void BinaryTree::postorderTraversal(struct Node *root){
 // level order traversal iterative function
 void BinaryTree::levelOrderTraversal(struct Node *root){
    
+   if(root == NULL){
+       cout<<"Tree is Empty \n";
+       return ;
+   }
    queue<Node *> qu;
    qu.push(root);
    while(!qu.empty()){
