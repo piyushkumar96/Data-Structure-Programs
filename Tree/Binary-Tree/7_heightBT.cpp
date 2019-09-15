@@ -52,6 +52,10 @@ int BinaryTree::height(struct Node *root){
 // level order traversal iterative function
 void BinaryTree::levelorderTraversal(struct Node *root){
    
+   if(root == NULL){
+       cout<<"Tree is Empty \n";
+       return ;
+   }
    queue<Node *> qu;
    qu.push(root);
    while(!qu.empty()){
