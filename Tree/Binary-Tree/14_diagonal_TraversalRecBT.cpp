@@ -1,6 +1,7 @@
 /**
  *  author:- piyushkumar96
  *  description:- diagonal Traversal of Binary Tree using recursive method
+ *  Time Complexity:- O(n)
 **/
 
 #include<bits/stdc++.h>
@@ -68,6 +69,10 @@ void BinaryTree::diagonalTraversal(struct Node *root){
 // level order traversal iterative function
 void BinaryTree::levelorderTraversal(struct Node *root){
    
+   if(root == NULL){
+       cout<<"Tree is Empty \n";
+       return ;
+   }
    queue<Node *> qu;
    qu.push(root);
    while(!qu.empty()){
