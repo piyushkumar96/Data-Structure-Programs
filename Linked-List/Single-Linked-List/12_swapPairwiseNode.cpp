@@ -78,39 +78,44 @@ struct LinkedList {
     
     // iterative method by swaping datas of Nodes
     void iterativePairwiseSwap(){
-        if(HEAD == NULL){
-            cout<<"Linked List is empty "<<"\n";
-        }else{
-            struct Node *temp = HEAD;
-            while(temp != NULL && temp->next != NULL){
-                swapData(&temp , &(temp->next));
-                temp = temp->next->next;            
-            }
+        // if LL is empty or only one node then no need to swap
+        if(HEAD == NULL || HEAD->next == NULL)
+            return;
+
+        struct Node *temp = HEAD;
+        while(temp != NULL && temp->next != NULL){
+            swapData(&temp , &(temp->next));
+            temp = temp->next->next;            
         }
+        
     }
 
         // iterative method by swaping links
-    void iterativePairwiseSwapLink(){
-        if(HEAD == NULL){
-            cout<<"Linked List is empty "<<"\n";
-        }else{
-            struct Node *temp = HEAD;
+    void iterativePairwiseSwapLink() {
+
+        // if LL is empty or only one node then no need to swap
+        if(HEAD == NULL || HEAD->next == NULL)
+            return;
+    
+        // swapping the first two nodes of LL
+        struct Node *curr = HEAD->next->next;
+        struct Node *prev = HEAD;
+        HEAD = HEAD->next;
+        HEAD->next = prev;
+        
+        // swap other nodes of LL
+        while(curr != NULL && curr->next != NULL){
             
-            HEAD = HEAD->next;
-            while(temp != NULL && temp->next != NULL){
-                struct Node* temp1 = temp->next->next;
-
-                temp->next->next = temp;
-                if(temp1->next == NULL){
-                    temp->next = temp1;
-                    break;
-                }  
-
-                temp->next = temp1->next;
-                temp = temp1;        
-                
-            }
+            prev->next = curr->next;
+            prev = curr;
+            
+            struct Node *temp = curr->next->next;
+            curr->next->next = curr;
+            curr = temp;
         }
+
+        prev->next = curr;
+        
     }
 
     void deleteLinkedList(){
