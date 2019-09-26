@@ -57,23 +57,25 @@ struct LinkedList {
     }
 
     // recursive method by swaping linkes
-    void recursivePairwiseSwapLink(struct Node *head_ref){
-        if(HEAD == NULL){
-            cout<<"Linked List is empty "<<"\n";
-        }else{
-            if((head_ref == NULL) || (head_ref->next == NULL) ){
-                
-                return;                   
-            }
-            HEAD = HEAD->next;
-            //cout<<"HEAD "<<HEAD->item<<"\n";
-            struct Node* temp = head_ref->next->next;
-            head_ref->next->next = head_ref;
-            head_ref->next = temp;
-
-            recursivePairwiseSwap(temp);
-            
+    Node* recursivePairwiseSwapLink(struct Node *head_ref){
+        
+        if((head_ref == NULL) || (head_ref->next == NULL) ){
+            return head_ref;                   
         }
+       
+        struct Node* remaining = head_ref->next->next;
+
+        // Change head 
+        struct Node* new_head = head_ref->next;
+
+        // Change next of second node 
+        head_ref->next->next = head_ref;
+
+        // Recur for remaining list and change next of head 
+        head_ref->next = recursivePairwiseSwapLink(remaining);
+
+         // Return new head of modified list 
+        return new_head;        
     }
     
     // iterative method by swaping datas of Nodes
@@ -180,7 +182,7 @@ int main(){
                     ll.printLL();
                     break;                    
 
-           case 5:  ll.recursivePairwiseSwapLink(HEAD);
+           case 5:  HEAD = ll.recursivePairwiseSwapLink(HEAD);
                     cout<<"After pairwise swapping the  ";
                     ll.printLL();
                     break;
